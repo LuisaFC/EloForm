@@ -1,21 +1,17 @@
 import React, {Component, Fragment} from 'react';
-import Header from '../Components/Header/Header';
 import 'materialize-css/dist/css/materialize.min.css';
+import './Home.css';
+import Header from '../Components/Header/Header';
+import Formulario from '../Components/Formulario/Form';
+
 
 class Home extends Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            usuario: [],
-        };
-    }
-
 
     render(){
         return(
             <Fragment>
                 <Header/>
+                <Formulario/>
             </Fragment>
         )
     }
