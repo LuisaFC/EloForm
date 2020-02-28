@@ -1,4 +1,6 @@
 import React, {Component, Fragment} from 'react';
+import Header from '../Components/Header/Header';
+import 'materialize-css/dist/css/materialize.min.css';
 
 class Home extends Component{
     constructor(props){
@@ -13,7 +15,7 @@ class Home extends Component{
     render(){
         return(
             <Fragment>
-                <h1>Teste</h1>
+                <Header/>
             </Fragment>
         )
     }
