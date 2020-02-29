@@ -1,0 +1,21 @@
+.Logo{
+    width: 200px;
+}
+
+.title{
+    padding-top: 1rem;
+    padding-left: 6rem;
+    padding-bottom: 1rem;
+}
+
+.linha{
+    margin-top: 1rem;
+}
+
+.input{
+ width: 60%;
+}
+
+.radio{
+    margin-top: 2rem;
+}
