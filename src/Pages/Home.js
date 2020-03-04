@@ -5,18 +5,23 @@ import Header from '../Components/Header/Header';
 import Formulario from '../Components/Formulario/Formulario';
 import Typography from '@material-ui/core/Typography';
 
-class Home extends Component{
+export default class Home extends Component{
+
+
     render(){
         return(
             <Fragment>
                 <Header/>
-                <Container maxWidth="sm" textAlign="center">
+                <Container maxWidth="sm" textalign="center">
                     <Typography variant="h4" className="title">EloForm</Typography>
                     <Formulario/>
                 </Container>
             </Fragment>
         )
     }
+
+
+
 }
 
-export default Home;
+
