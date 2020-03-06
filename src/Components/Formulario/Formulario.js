@@ -18,6 +18,7 @@ class Formulario extends Component {
             tel: '',
             combo: '',
             isVisible: false,
+            redes: [],
         }
 
         this.state = this.stateInicial;
@@ -45,6 +46,12 @@ class Formulario extends Component {
         if (e.target.name === "nao") {
             this.setState({ isVisible: false })
         }
+    }
+
+    insertRedes = e => {
+        const {redes} = this.state;
+        !redes.includes(e.target.name) ? redes.push(e.target.name) : redes.splice(redes.indexOf(e.target.name), 1);
+        this.setState({redes});
     }
 
 
@@ -78,30 +85,32 @@ class Formulario extends Component {
                         <FormControl>
                             <FormLabel>Possui rede social?</FormLabel>
                             <RadioGroup onChange={this.inputListener} >
-                                <FormControlLabel name="sim" value="sim" control={<Radio />} label="Sim" checked={this.state.isVisible} onChange={this.onChange} />
-                                <FormControlLabel name="nao" value="nao" control={<Radio />} label="Não" onChange={this.onChange} />
+                                <FormControlLabel  value="sim" control={<Radio />} label="Sim" checked={this.state.isVisible} onChange={this.onChange} />
+                                <FormControlLabel  value="nao" control={<Radio />} label="Não" onChange={this.onChange} />
                             </RadioGroup>
                         </FormControl>
                     </Box>
                     <Box className="linha" hidden={!this.state.isVisible} >
                         <FormControl>
                             <FormLabel>Quais?</FormLabel>
-                            <FormGroup onChange={this.inputListener} >
+                            <FormGroup >
                                 <FormControlLabel
                                     control={<Checkbox value="facebook"   />}
                                     label="Facebook"
-                                    name="redes"
+                                    name="Facebook"
+                                    onChange={this.insertRedes}
                                 />
                                 <FormControlLabel
                                     control={<Checkbox value="linkedin" />}
                                     label="Linkedin"
-                                    name="redes"
+                                    name="Linkedin"
+                                    onChange={this.insertRedes}
                                 />
                                 <FormControlLabel
                                     control={<Checkbox value="Instagram" />}
                                     label="Instagram"
-                                    name="redes"
-                                    
+                                    name="Instagram"
+                                    onChange={this.insertRedes}
                                 />
                             </FormGroup>
                         </FormControl>
