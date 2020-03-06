@@ -7,6 +7,23 @@ import Typography from '@material-ui/core/Typography';
 
 export default class Home extends Component{
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            users: [],
+        }
+    }
+
+    submitListener = user => {
+        const {users} = this.state;
+        users.push(user);
+        console.log(users);
+        this.setState({users})
+        
+        
+    }
+
 
     render(){
         return(
@@ -14,7 +31,7 @@ export default class Home extends Component{
                 <Header/>
                 <Container maxWidth="sm" textalign="center">
                     <Typography variant="h4" className="title">EloForm</Typography>
-                    <Formulario/>
+                    <Formulario submitListener={this.submitListener} />
                 </Container>
             </Fragment>
         )
