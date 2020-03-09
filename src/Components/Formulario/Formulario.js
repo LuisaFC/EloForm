@@ -13,12 +13,31 @@ class Formulario extends Component {
 
         this.state = { isVisible: false };
         this.onChange = this.onChange.bind(this);
+
+
+        this.validador = new FormValidator([
+            {
+                campo: 'nome',
+                metodo: 'isEmpty',
+                validoQuando: false,
+                mensagem: 'Entre com nome e sobrenome'
+            },
+            {
+                campo: 'tel',
+                metodo: 'isInt',
+                validoQuando: true,
+                args: [{min: 0, max: 99999999999}],
+                mensagem: 'Só é permitido valores numéricos'
+            }
+        ]);
+
         this.stateInicial = {
             nome: '',
             tel: '',
             combo: '',
             isVisible: false,
             redes: [],
+            validacao: this.validador.valido()
         }
 
         this.state = this.stateInicial;
@@ -35,10 +54,23 @@ class Formulario extends Component {
 
     }
 
-    submitForm = () => {
-        this.props.submitListener(this.state);
-        console.log(this.state);
-        this.setState(this.stateInicial);
+    submitForm = ()=>{
+
+        const validacao = this.validador.valida(this.state);
+
+        if(validacao.isValid){
+            this.props.submitListener(this.state);
+            console.log(this.state);
+            this.setState(this.stateInicial);
+        }else{
+            const {nome, tel} = validacao;
+            const campos = [nome, tel];
+            const camposInvalidos = campos.filter(elem =>{
+                return elem.isInvalid;
+            });
+
+            camposInvalidos.forEach(console.log);
+        }
     }
 
     onChange(e) {
@@ -64,10 +96,10 @@ class Formulario extends Component {
         return (
             <form>
                 <Box className="linha">
-                    <TextField className="input" id="nome" label="Nome" name="nome" type="text" value={nome} onChange={this.inputListener} />
+                    <TextField className="input validate" id="nome" label="Nome" name="nome" type="text" value={nome} onChange={this.inputListener} />
                 </Box>
                 <Box className="linha">
-                    <TextField className="input" id="tel" name="tel" label="Telefone" type="text" value={tel} onChange={this.inputListener} />
+                    <TextField className="input validate" id="tel" label="Telefone" name="tel" type="text" value={tel} onChange={this.inputListener} />
                 </Box>
                 <Box className="linha" >
                     <FormControl className="input">
@@ -86,7 +118,7 @@ class Formulario extends Component {
                             <FormLabel>Possui rede social?</FormLabel>
                             <RadioGroup onChange={this.inputListener} >
                                 <FormControlLabel  value="sim" control={<Radio />} label="Sim" checked={this.state.isVisible} onChange={this.onChange} />
-                                <FormControlLabel  value="nao" control={<Radio />} label="Não" onChange={this.onChange} />
+                                <FormControlLabel  value="nao" name='nao' control={<Radio />} label="Não"  onChange={this.onChange} />
                             </RadioGroup>
                         </FormControl>
                     </Box>
