@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { TextField, Select, InputLabel, FormControl, RadioGroup, FormLabel, Radio, FormControlLabel, Checkbox, FormGroup, Box} from '@material-ui/core';
+import { TextField, Select, InputLabel, FormControl, Input, RadioGroup, FormLabel, Radio, FormControlLabel, Checkbox, FormGroup, Box} from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import yellow from '@material-ui/core/colors/yellow';
 import Button from '@material-ui/core/Button';
 import FormValidator from '../../utils/FormValidator';
+import InputMask from 'react-input-mask';
 
 
 class Formulario extends Component {
@@ -22,13 +23,6 @@ class Formulario extends Component {
                 validoQuando: false,
                 mensagem: 'Entre com nome e sobrenome'
             },
-            {
-                campo: 'tel',
-                metodo: 'isInt',
-                validoQuando: true,
-                args: [{min: 0, max: 99999999999}],
-                mensagem: 'Só é permitido valores numéricos'
-            }
         ]);
 
         this.stateInicial = {
@@ -63,8 +57,8 @@ class Formulario extends Component {
             console.log(this.state);
             this.setState(this.stateInicial);
         }else{
-            const {nome, tel} = validacao;
-            const campos = [nome, tel];
+            const {nome} = validacao;
+            const campos = [nome];
             const camposInvalidos = campos.filter(elem =>{
                 return elem.isInvalid;
             });
@@ -86,6 +80,12 @@ class Formulario extends Component {
         this.setState({redes});
     }
 
+    textMaskCustom = props => {
+        return(
+            <InputMask {...props} mask="(99) \99999-9999" maskChar=" " />
+        )
+    }
+
 
 
     render() {
@@ -99,7 +99,11 @@ class Formulario extends Component {
                     <TextField className="input validate" id="nome" label="Nome" name="nome" type="text" value={nome} onChange={this.inputListener} />
                 </Box>
                 <Box className="linha">
-                    <TextField className="input validate" id="tel" label="Telefone" name="tel" type="text" value={tel} onChange={this.inputListener} />
+                <FormControl className="input validate">
+                    <InputLabel  htmlFor="tel">Telefone</InputLabel>
+                        <Input  id="tel" label="Telefone" name="tel" type="text" value={tel} onChange={this.inputListener} inputComponent={this.textMaskCustom}>
+                        </Input>
+                    </FormControl>
                 </Box>
                 <Box className="linha" >
                     <FormControl className="input">
