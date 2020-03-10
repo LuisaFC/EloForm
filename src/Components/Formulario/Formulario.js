@@ -12,7 +12,9 @@ class Formulario extends Component {
     constructor(props) {
         super(props);
 
-
+        this.state ={
+            disable: false
+        }
         this.validador = new FormValidator([
             {
                 campo: 'nome',
@@ -63,6 +65,7 @@ class Formulario extends Component {
         if (validacao.isValid) {
             this.props.submitListener(this.state);
             console.log(this.state);
+            this.setState({disable: true})
             this.setState(this.stateInicial);
         } else {
             const { nome } = validacao;
@@ -76,6 +79,7 @@ class Formulario extends Component {
             
         }
     }
+
 
     onChange(e) {
         this.setState({ isVisible: !this.state.isVisible });
@@ -103,7 +107,7 @@ class Formulario extends Component {
 
     render() {
 
-        const { nome, tel, combo, errors } = this.state;
+        const { nome, tel, combo, errors, disable } = this.state;
 
 
         return (
@@ -177,8 +181,10 @@ class Formulario extends Component {
                     </Box>
 
                     <Button
-                        variant="contained" color="secondary"
-                        onClick={this.submitForm} >
+                        variant="contained" 
+                        disabled={disable}
+                        color="secondary"
+                        onClick={this.submitForm}>
                         Send
                     </Button>
 
