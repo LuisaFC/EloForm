@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import { TextField, Select, InputLabel, FormControl, Input, RadioGroup, FormLabel, Radio, FormControlLabel, Checkbox, FormGroup, Box } from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import yellow from '@material-ui/core/colors/yellow';
 import Button from '@material-ui/core/Button';
 import FormValidator from '../../utils/FormValidator';
 import InputMask from 'react-input-mask';
-
-
+import Toast from '../Alert/Toast';
 
 class Formulario extends Component {
 
     constructor(props) {
         super(props);
 
-        // this.state = {nome: ''}
 
         this.validador = new FormValidator([
             {
@@ -38,7 +36,8 @@ class Formulario extends Component {
             isVisible: false,
             redes: [],
             validacao: this.validador.valido(),
-            // errors: {}
+            errors: {},
+            open: true,
         }
 
         
@@ -72,7 +71,9 @@ class Formulario extends Component {
                 return elem.isInvalid;
             });
 
-            camposInvalidos.forEach(console.log);
+            camposInvalidos.forEach(err => this.setState({errors: err, open:true}));
+
+            
         }
     }
 
@@ -95,16 +96,31 @@ class Formulario extends Component {
         )
     }
 
+    onClose = () => {
+        this.setState({open:false})
+    }
+
 
     render() {
 
-        const { nome, tel, combo, } = this.state;
+        const { nome, tel, combo, errors } = this.state;
 
 
         return (
+
             <form>
                 <Box className="linha">
                     <TextField className="input validate" id="nome" label="Nome" name="nome" type="text" value={nome} onChange={this.inputListener} />
+                    {errors.message && (
+                        <Toast
+                            open={this.state.open}
+                            message={errors.message}
+                            severity='error'
+                            vertical='top'
+                            horizontal='right'
+                            onClose={this.onClose}
+                        />
+                    )}
                 </Box>
                 <Box className="linha">
                     <FormControl className="input validate">
