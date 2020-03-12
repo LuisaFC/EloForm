@@ -20,8 +20,6 @@ export default class Home extends Component{
         users.push(user);
         console.log(users);
         this.setState({users})
-        
-        
     }
 
 

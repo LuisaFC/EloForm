@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import FormValidator from '../../utils/FormValidator';
 import InputMask from 'react-input-mask';
 import Toast from '../Alert/Toast';
+import cadastar from '../../utils/FormAction';
 
 class Formulario extends Component {
 
@@ -63,8 +64,20 @@ class Formulario extends Component {
         const validacao = this.validador.valida(this.state);
 
         if (validacao.isValid) {
+
+            const newUser = {
+                nome: this.state.nome,
+                tel: this.state.tel,
+                combo: this.state.combo,
+                redes: this.state.redes,
+            }
+
+
+            cadastar(newUser);
+
             this.props.submitListener(this.state);
-            console.log(this.state);
+
+            // console.log(this.state);
             this.setState({disable: true})
             this.setState(this.stateInicial);
         } else {

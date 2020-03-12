@@ -1,4 +1,4 @@
-![](/src/img/EloGroup.png)
+![](/EloFormClient/src/img/EloGroup.png)
 
 # EloForm
 
