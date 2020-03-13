@@ -30,6 +30,13 @@ class Formulario extends Component {
                 validoQuando: false,
                 mensagem: 'Entre com nome e sobrenome'
             },
+            {
+                campo: 'tel',
+                metodo: 'matches',
+                validoQuando: true,
+                args: [/^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/],
+                mensagem: 'Telefone Inválido'
+            },
         ]);
 
         this.stateInicial = {
@@ -81,8 +88,8 @@ class Formulario extends Component {
             this.setState({disable: true})
             this.setState(this.stateInicial);
         } else {
-            const { nome } = validacao;
-            const campos = [nome];
+            const { nome, tel } = validacao;
+            const campos = [nome, tel];
             const camposInvalidos = campos.filter(elem => {
                 return elem.isInvalid;
             });
